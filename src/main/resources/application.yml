@@ -1,0 +1,33 @@
+management:
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+feign:
+  client:
+    config:
+      default:
+        read-timeout: 2000
+        connect-timeout: 500
+  circuitbreaker:
+    enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 3s
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 10s
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    io.github.resilience4j: DEBUG
